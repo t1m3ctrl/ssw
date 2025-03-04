@@ -6,6 +6,7 @@ import org.sibsutis.lab4.model.Status;
 import org.sibsutis.lab4.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -51,5 +52,10 @@ public class PetController implements PetControllerDesc {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException() {
         return ResponseEntity.badRequest().build();
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleInvalidJson(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(400).body("Invalid request body: " + ex.getMessage());
     }
 }
