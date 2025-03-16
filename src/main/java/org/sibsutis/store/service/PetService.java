@@ -39,8 +39,9 @@ public class PetService {
     }
 
     public Pet delete(Long id) throws PetNotFoundException {
-        findById(id);
-        return petRepository.delete(id);
+        Pet pet = findById(id);
+        petRepository.delete(pet);
+        return pet;
     }
 
 
