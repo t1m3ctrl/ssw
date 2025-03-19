@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0001" author="aldar.sotnich">
+        <sql>
+            INSERT INTO petstore.category (name) VALUES
+                 ('Dogs'),
+                 ('Cats'),
+                 ('Birds'),
+                 ('Fish');
+
+            INSERT INTO petstore.tag (name) VALUES
+                 ('Friendly'),
+                 ('Aggressive'),
+                 ('Playful'),
+                 ('Lazy');
+
+            INSERT INTO petstore.pet (name, category_id, status) VALUES
+                 ('Rex', 1, 'available'),
+                 ('Whiskers', 2, 'pending'),
+                 ('Tweety', 3, 'sold'),
+                 ('Nemo', 4, 'available');
+
+            INSERT INTO petstore.pet_tag (pet_id, tag_id) VALUES
+                 (1, 1),
+                 (1, 3),
+                 (2, 4),
+                 (3, 3),
+                 (4, 1);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
