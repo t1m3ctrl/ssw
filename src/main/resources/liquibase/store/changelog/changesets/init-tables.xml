@@ -6,26 +6,26 @@
 
     <changeSet id="0001" author="aldar.sotnich">
         <sql>
-            CREATE SCHEMA petstore;
+            CREATE SCHEMA IF NOT EXISTS petstore;
 
-            CREATE TABLE petstore.category (
+            CREATE TABLE IF NOT EXISTS petstore.category (
                  id SERIAL PRIMARY KEY,
                  name VARCHAR(255) NOT NULL
             );
 
-            CREATE TABLE petstore.tag (
+            CREATE TABLE IF NOT EXISTS petstore.tag (
                  id SERIAL PRIMARY KEY,
                  name VARCHAR(255) NOT NULL
             );
 
-            CREATE TABLE petstore.pet (
+            CREATE TABLE IF NOT EXISTS petstore.pet (
                  id SERIAL PRIMARY KEY,
                  name VARCHAR(255) NOT NULL,
                  category_id INTEGER REFERENCES petstore.category(id),
                  status VARCHAR(50) CHECK (status IN ('available', 'pending', 'sold'))
             );
 
-            CREATE TABLE petstore.pet_tag (
+            CREATE TABLE IF NOT EXISTS petstore.pet_tag (
                  pet_id INTEGER REFERENCES petstore.pet(id) ON DELETE CASCADE,
                  tag_id INTEGER REFERENCES petstore.tag(id) ON DELETE CASCADE,
                  PRIMARY KEY (pet_id, tag_id)
