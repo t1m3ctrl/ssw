@@ -1,0 +1,29 @@
+services:
+  postgres_store:
+    image: postgres:15
+    container_name: my_postgres_store
+    environment:
+      POSTGRES_DB: petdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5544:5432"
+    volumes:
+      - pg_data_store:/var/lib/postgresql/data
+
+  postgres_comments:
+    image: postgres:15
+    container_name: my_postgres_comments
+    environment:
+      POSTGRES_DB: commentsdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5545:5432"
+    volumes:
+      - pg_data_comments:/var/lib/postgresql/data
+
+
+volumes:
+  pg_data_store:
+  pg_data_comments:
