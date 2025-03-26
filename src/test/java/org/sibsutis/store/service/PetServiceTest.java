@@ -11,12 +11,14 @@ import org.sibsutis.store.exceptions.PetNotFoundException;
 import org.sibsutis.store.model.Pet;
 import org.sibsutis.store.model.Status;
 import org.sibsutis.store.repository.PetRepository;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("store")
 class PetServiceTest {
     @Mock
     private PetRepository petRepository;
