@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0001" author="aldar.sotnich">
+        <sql>
+            INSERT INTO comments.comments (user_id, resource_id, content) VALUES
+             (1, 101, 'ПЕРВЫЙ!!!!'),
+             (2, 102, 'не согласен с авторам'),
+             (3, 101, 'че он несет'),
+             (1, 103, '10:11 LMAOO!'),
+             (2, 101, 'Спасибо автору за очередную порцию калтента'),
+             (3, 104, 'Лучший момент 9:99:99');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

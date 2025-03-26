@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0001" author="aldar.sotnich">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS comments;
+
+            CREATE TABLE comments.comments (
+              id SERIAL PRIMARY KEY,
+              user_id INT NOT NULL,
+              resource_id INT NOT NULL,
+              content TEXT NOT NULL,
+              created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

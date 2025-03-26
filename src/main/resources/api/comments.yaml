@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Comments Microservice API
+  description: API for managing comments on a platform.
+  version: 1.0.0
+  contact:
+    email: support@example.com
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /comments:
+    post:
+      tags:
+        - comments
+      summary: Create a new comment
+      description: Add a new comment to a specific resource.
+      operationId: createComment
+      requestBody:
+        description: Comment data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        '201':
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+
+  /comments/{commentId}:
+    get:
+      tags:
+        - comments
+      summary: Get a comment by ID
+      description: Retrieve details of a specific comment.
+      operationId: getCommentById
+      parameters:
+        - name: commentId
+          in: path
+          description: ID of the comment
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comment found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Comment not found
+    delete:
+      tags:
+        - comments
+      summary: Delete a comment
+      description: Remove a comment by its ID.
+      operationId: deleteComment
+      parameters:
+        - name: commentId
+          in: path
+          description: ID of the comment
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Comment deleted successfully
+        '404':
+          description: Comment not found
+
+  /comments/user/{userId}:
+    get:
+      tags:
+        - comments
+      summary: Get all comments by user
+      description: Retrieve all comments made by a specific user.
+      operationId: getCommentsByUser
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved comments by user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+
+  /comments/resource/{resourceId}:
+    get:
+      tags:
+        - comments
+      summary: Get all comments for a resource
+      description: Retrieve all comments for a specific resource.
+      operationId: getCommentsByResource
+      parameters:
+        - name: resourceId
+          in: path
+          description: ID of the resource
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved comments for the resource
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12345
+        userId:
+          type: integer
+          example: 67890
+        resourceId:
+          type: integer
+          example: 54321
+        content:
+          type: string
+          example: "This is a comment."
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-03-22T12:00:00Z"
+
+    CommentInput:
+      type: object
+      required:
+        - userId
+        - resourceId
+        - content
+      properties:
+        userId:
+          type: integer
+          example: 67890
+        resourceId:
+          type: integer
+          example: 54321
+        content:
+          type: string
+          example: "This is a new comment."
