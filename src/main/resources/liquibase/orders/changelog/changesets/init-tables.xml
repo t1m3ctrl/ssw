@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0001" author="aldar.sotnich">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS orders;
+
+            CREATE TABLE orders.customer (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                city VARCHAR(255) NOT NULL,
+                street VARCHAR(255) NOT NULL,
+                zipcode VARCHAR(20) NOT NULL
+            );
+
+            CREATE TABLE orders.item (
+                id SERIAL PRIMARY KEY,
+                description TEXT NOT NULL,
+                shipping_weight DECIMAL(10, 2) NOT NULL
+            );
+
+            CREATE TABLE orders.order (
+                id SERIAL PRIMARY KEY,
+                customer_id INT NOT NULL,
+                time TIMESTAMP NOT NULL,
+                status VARCHAR(50) NOT NULL,
+                FOREIGN KEY (customer_id) REFERENCES orders.customer(id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE orders.order_detail (
+                id SERIAL PRIMARY KEY,
+                order_id INT NOT NULL,
+                item_id INT NOT NULL,
+                quantity INT NOT NULL,
+                tax_status VARCHAR(50) NOT NULL,
+                FOREIGN KEY (order_id) REFERENCES orders.order(id) ON DELETE CASCADE,
+                FOREIGN KEY (item_id) REFERENCES orders.item(id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE orders.payment (
+                id SERIAL PRIMARY KEY,
+                order_id INT NOT NULL,
+                amount DECIMAL(10,2) NOT NULL,
+                payment_type VARCHAR(20) NOT NULL,
+                FOREIGN KEY (order_id) REFERENCES orders.order(id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE orders.cash (
+                id INT PRIMARY KEY,
+                cash_tendered DECIMAL(10,2) NOT NULL,
+                FOREIGN KEY (id) REFERENCES orders.payment(id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE orders.check (
+                id INT PRIMARY KEY,
+                check_name VARCHAR(255) NOT NULL,
+                check_bank_id VARCHAR(50) NOT NULL,
+                FOREIGN KEY (id) REFERENCES orders.payment(id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE orders.credit (
+                id INT PRIMARY KEY,
+                credit_number VARCHAR(50) NOT NULL,
+                credit_type VARCHAR(50) NOT NULL,
+                credit_exp_date TIMESTAMP NOT NULL,
+                FOREIGN KEY (id) REFERENCES orders.payment(id) ON DELETE CASCADE
+            );
+
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

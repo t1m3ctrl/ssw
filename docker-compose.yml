@@ -23,7 +23,19 @@ services:
     volumes:
       - pg_data_comments:/var/lib/postgresql/data
 
+  postgres_orders:
+    image: postgres:15
+    container_name: my_postgres_orders
+    environment:
+      POSTGRES_DB: ordersdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5546:5432"
+    volumes:
+      - pg_data_orders:/var/lib/postgresql/data
 
 volumes:
   pg_data_store:
   pg_data_comments:
+  pg_data_orders:

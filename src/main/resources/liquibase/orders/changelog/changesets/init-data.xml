@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0001" author="aldar.sotnich">
+        <sql>
+            INSERT INTO orders.customer (name, city, street, zipcode) VALUES
+                ('Иван Иванов', 'Москва', 'Тверская ул., д. 5', '125009'),
+                ('Петр Петров', 'Санкт-Петербург', 'Невский проспект, д. 10', '191186'),
+                ('Сидор Сидоров', 'Екатеринбург', 'Ленина ул., д. 25', '620014');
+
+            INSERT INTO orders.item (description, shipping_weight) VALUES
+                ('Ноутбук', 2.50),
+                ('Смартфон', 0.50),
+                ('Планшет', 1.00);
+
+            INSERT INTO orders.order (customer_id, time, status) VALUES
+                (1, '2025-03-29 10:00:00', 'Обработан'),
+                (2, '2025-03-28 14:30:00', 'Доставлен'),
+                (3, '2025-03-27 09:15:00', 'Ожидает оплаты');
+
+            INSERT INTO orders.order_detail (order_id, item_id, quantity, tax_status) VALUES
+                (1, 1, 1, 'Облагается НДС'),
+                (1, 2, 2, 'Облагается НДС'),
+                (2, 3, 1, 'Без НДС'),
+                (3, 1, 1, 'Облагается НДС');
+
+            INSERT INTO orders.payment (order_id, amount, payment_type) VALUES
+                (1, 150000.00, 'Кредит'),
+                (2, 50000.00, 'Чек'),
+                (3, 80000.00, 'Наличные');
+
+            INSERT INTO orders.cash (id, cash_tendered) VALUES
+                (3, 80000.00);
+
+            INSERT INTO orders.check (id, check_name, check_bank_id) VALUES
+                (2, 'Петр Петров', 'SBER123');
+
+            INSERT INTO orders.credit (id, credit_number, credit_type, credit_exp_date) VALUES
+                (1, '1234-5678-9012-3456', 'Visa', '2027-12-31 23:59:59');
+
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
